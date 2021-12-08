@@ -9,4 +9,4 @@ curl https://raw.githubusercontent.com/dmorand17/dotfiles-bare/master/scripts/co
 ```
 
 ## Additional setup
-Refer to
+see documentation [here](.cfg-tools/README.md)

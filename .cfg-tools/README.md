@@ -1,26 +1,25 @@
 # dotfiles-tools
 A list of installation commands / scripts to aid in bootstrapping a system.
 
-## Bootstrap Linux
-### Install optional packages
+# Bootstrap Linux
+## Install optional packages
 ```bash
-sudo apt-get update -qq > /dev/null
-sudo apt-get install -qq \
+sudo apt-get update 
+sudo apt-get install \
     build-essential \
     curl \
     git \
     vim \
-    fzf \
     zsh \
     rsync \
     python3.9 \
     python3-pip \
     ripgrep \
-    ssh > /dev/null
+    ssh
 sudo pip3 install virtualenvwrapper -qq > /dev/null
 ```
 
-### Install Brew
+## Install Brew
 ```bash
 sudo apt update
 sudo apt-get install build-essential
@@ -31,6 +30,12 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ${HOME}/.zshrc
 
 # Bootstrap Mac
 ## Brew
+1. Install [Brew](https://brew.sh/)
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+2. Install packages using brew
 ```bash
 #!/usr/bin/env bash
 
@@ -55,13 +60,10 @@ brew install coreutils
 brew install gawk
 brew install wget
 brew install ripgrep
-brew install bat
 brew install jq
-brew install fzf
 brew install xmlsec1
 brew install node
 brew install tree
-brew install starship
 brew install csvkit
 
 # dbeaver
@@ -83,8 +85,9 @@ brew install docker-machine
 brew cleanup
 ```
 
-# SSH
-## Configuration
+# Additional setup
+## SSH
+### Configuration
 ```bash
 mkdir $(HOME)/.ssh && chmod 700 ~/.ssh
 touch ${HOME}/.ssh/authorized_keys && chmod 600 ${HOME}/.ssh/authorized_keys
@@ -93,9 +96,10 @@ ssh-keygen -t rsa -b 4096 && printf "\n\n\033[32mPublic key (add to github)\033[
 chmod 600 ~/.ssh/id_rsa
 ```
 
-## .ssh/config example
+### .ssh/config example
 Starter ssh configuration that is used on most of my bootstrapped environments
 ```bash
+cat >> ${HOME}/.ssh/config <<EOF
 Host *
   ServerAliveInterval 60
   ServerAliveCountMax 300
@@ -107,34 +111,99 @@ Host dougie-fresh.xyz dougie-desktop
 
 Host github.com
   IdentityFile ~/.ssh/id_rsa_github
+EOF
 ```
 
-# Additional setup
+## Setting up zsh
+
+### Install oh-my-zsh
+[documentation](https://ohmyz.sh/)
+1. Install oh-my-zsh
+```bash
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+2. Change shell to `zsh` if not already done
+```bash
+chsh -s /usr/bin/zsh
+```
+
+3. Update `~/.zshrc`
+```bash
+cat >> ${HOME}/.zshrc <<EOF
+
+###############
+# Zplug setup #
+###############
+if [[ ! -d ~/.zplug ]]; then
+  #git clone https://github.com/zplug/zplug ~/.zplug
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  source ~/.zplug/init.zsh && zplug update --self
+fi
+
+source ~/.zplug/init.zsh
+
+zplug "plugins/git",   from:oh-my-zsh
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+# Load themes
+zplug 'dracula/zsh', as:theme
+#zplug romkatv/powerlevel10k, as:theme, depth:1
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+####################
+# Additional setup #
+####################
+export DEFAULT_USER=`whoami`" >> ${HOME}/.zshrc
+[[ -f "${HOME}/.profile" ]] && source ${HOME}/.profile >> ${HOME}/.zshrc
+
+EOF
+```
+
+### Install Zplug
+1. Install [zplug](https://github.com/zplug/zplug) plugin manager for zsh
+
+*preferred method*
+```bash
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+```
+*Alternate method*
+```bash
+brew install zplug
+```
+
+2. Add zplug sourcing to `{$HOME}/.zshrc`
+```bash
+echo "[ -f ~/.zplug.zsh ] && source ~/.zplug.zsh" >> ${HOME}/.zshrc
+```
+
+3. Load plugins (not required)
+```bash
+zplug load
+```
 
 ## fzf / bat
-install / configure fzf and bat
 * [fzf](https://github.com/junegunn/fzf) command-line fuzzy finder
 * [bat](https://github.com/sharkdp/bat) `cat` clone with syntax highlighting
 
-### Installation
-#### Linux
-```bash
-sudo apt-get install -qq fzf bat
-```
-
-*Note:* If installed with apt the install for `bat` might be called `batcat`.  This can be addressed as follows:
-```
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
-```
-
-#### Mac
+1. Install using `brew`
 ```bash
 brew install bat
 brew install fzf
 ```
 
-#### Alternative installation
+*Alternate method*
 ```bash
 # Install fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
@@ -146,13 +215,18 @@ mkdir bat && tar -xzvf bat.tar.gz -C bat --strip-components=1
 rm ${HOME}/bat.tar.gz
 ```
 
-## oh-my-zsh
+## starship
+Installation of [starship](https://starship.rs/) prompt.
 
-### Zplug
+1. Install using `brew`
 ```bash
-zplug update
+brew install starship
 ```
 
+2. Add starship init to zshrc
+```bash
+eval "$(starship init zsh)" >> ~/.zshrc
+```
 
 ## Robotomono
 Download robotomono
