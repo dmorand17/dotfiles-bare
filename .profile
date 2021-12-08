@@ -8,16 +8,9 @@ for file in ~/.{aliases,functions}; do
 done;
 unset file;
 
-# Source git completion
-if [ -f ~/.git-completion.bash ]; then
+# Source git completion if shell != zsh
+if [[ -f ~/.git-completion.bash && -z "$ZSH_VERSION" ]]; then
   source ~/.git-completion.bash
-fi
-
-# Source functions
-if [ -d ~/.functions ]; then
-	for F in ~/.functions/*; do
-		source $F
-	done
 fi
 
 ### Get os name via uname ###
@@ -36,11 +29,22 @@ case $_myos in
 esac
 
 # virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs   # Optional
-export PROJECT_HOME=$HOME/development     # Optional
-export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-source /usr/local/bin/virtualenvwrapper.sh
+if [[ -f /usr/local/bin/virtualenv ]]; then
+    export WORKON_HOME=$HOME/.virtualenvs   # Optional
+    export PROJECT_HOME=$HOME/development     # Optional
+    export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 # Source the ssh agent if found
 if [ -f ~/.ssh-agent ]; then . ~/.ssh-agent; fi
+
+# Source fzf if installed
+if [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+    export FZF_DEFAULT_OPTS='
+        --bind="f2:toggle-preview,tab:execute(less {})"
+        --preview "bat --style=numbers --color=always --line-range :500 {}"
+        --preview-window=right:60%:hidden'
+fi
