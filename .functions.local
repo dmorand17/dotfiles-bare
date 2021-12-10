@@ -1,0 +1,88 @@
+function jdk() {
+	version=$1
+    export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+    java -version
+}
+
+# Update commure-repos
+function rebaseRepo() {
+    currDir=`pwd`
+    echo "Current directory: ${currDir}"
+    cd ~/workspace    
+   
+    echo "------------------------------"
+    echo "    Updating repos"
+    echo "------------------------------"
+    
+    for repo in "$@"; do
+        pushd "${repo}" && rebaseWithMaster && popd
+    done
+    echo 
+    
+    cd "${currDir}"
+    echo "Finished rebasing"
+}
+
+function gitlog_serv-config() {
+    git -C ~/workspace/serv-configs pull --rebase 
+    git -C ~/workspace/serv-configs log master --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+}
+
+function postgres_bend() {
+    pushd $fend/bend > /dev/null
+    az_tenant=$(az account show --query tenantId -o tsv)
+    if [[ ${az_tenant} != "fb46afcb-63c3-496e-9e9d-53f3d584ebeb" ]]; then
+        printf "\033[0;32mLogging into 'fb46afcb-63c3-496e-9e9d-53f3d584ebeb'...\033[0m"
+        az login -t fb46afcb-63c3-496e-9e9d-53f3d584ebeb
+    fi
+ 
+    # Check if process running on 5432 already
+    if [[ ! $(lsof -nP -i TCP | grep LISTEN | grep 5432) ]]; then 
+        docker run -d \
+        --label "postgres-bend" \
+        -p 5432:5432 \
+        -e POSTGRES_USER=root \
+        -e POSTGRES_HOST_AUTH_METHOD=trust \
+        commuredev.azurecr.io/vendored/postgres:12.3-f98442c0ce07b9a3 \
+        -c shared_preload_libraries=pgaudit \
+        -c max_connections=1000    
+
+        echo "Initializing Postgres for bend..."
+        FEATURE_use_postgresql=true cargo run --bin bend -- maint initdb --dbport 5432 -h 0.0.0.0
+        echo "Initializing Authorization for bend..."
+        FEATURE_use_postgresql=true cargo run --bin bend -- maint initauth --dbport 5432 -h 0.0.0.0
+        echo "Finished initializing Postgres..."
+    else
+        echo "Postgres already running on port 5432"
+        echo "lsof -nP -i TCP | grep LISTEN"
+    fi
+
+    # FEATURE_use_postgresql=true ./bin/bend-dev start --dbport 5432 -h 0.0.0.0 > ~/workspace/var/log/bend/bend.log 2>&1 &
+    echo "Run \033[0;32mlocalbend_postgres\033[0m to launch bend!" 
+    popd > /dev/null
+}
+
+# Update commure-repos
+function rebaseRepos(){
+    currDir=`pwd`
+    echo "Current directory: ${currDir}"
+    
+    echo "Updating dotfiles..."
+    exe cd ~/dotfiles && git pull --rebase    
+    echo    
+
+    echo "------------------------------"
+    echo "    Updating Commure repos"
+    echo "------------------------------"
+    exe cd ~/workspace/commure && git pull --rebase
+    echo 
+
+    exe cd ~/workspace/serv-configs && git pull --rebase
+    echo 
+
+    exe cd ~/workspace/environments && git pull --rebase
+    echo 
+    
+    echo "Finished rebase"
+    cd "${currDir}"
+}

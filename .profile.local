@@ -1,0 +1,25 @@
+
+export PATH=$(brew --prefix)/opt/make/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:~/.local/bin:/Users/douglasm/scripts/shell:/Users/douglasm/scripts/pushover:$PATH
+export PATH=$PATH:$HOME/workspace/commure/bin
+export PATH=$PATH:$HOME/workspace/commure/tools/sebastian
+export PATH=$PATH:$HOME/workspace/commure/tools/roy
+export PATH=$PATH:$HOME/workspace/commure/tools/satools
+export fend="/Users/douglasm/workspace/commure"
+export bend="/Users/douglasm/workspace/commure/bend"
+export tools="/Users/douglasm/workspace/commure/tools"
+export serv_configs="$bend/serv-configs"
+export environments="/Users/douglasm/workspace/environments"
+
+
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="$PATH:$HOME/workspace/satools/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# tools/bootstrap autopatched
+ulimit -S -n 2048
+# tools/bootstrap autopatched
+export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
+

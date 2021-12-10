@@ -1,0 +1,33 @@
+
+# Mac specific aliases
+alias brew_update='brew update && brew outdated && brew upgrade && brew outdated --cask && brew upgrade --cask'
+
+# Work specific aliases
+alias ssh="/Users/douglasm/scripts/shell/ssh-iTerm2"
+
+alias mermaid="./node_modules/.bin/mmdc $@"
+
+alias tailf="tail -f $@"
+alias split="gsplit"
+alias k=kubectl
+
+# Azure aliases
+alias azlogin_commure="az login -t fb46afcb-63c3-496e-9e9d-53f3d584ebeb"
+alias azlogin_commure_customers="az login -t 1f0f59b2-6e5b-403e-a71a-3806f7708b23"
+alias azlogin_tcarent="az login -t 1f0f59b2-6e5b-403e-a71a-3806f7708b23"
+alias azlogin_tju="az login -t 6e96b3fb-c5df-40e8-934f-4941a721e7b3"
+
+# Docker aliases
+
+# piston runscripts
+alias piston_runscripts="RUST_LOG=fhir_piston=error RUST_BACKTRACE=1 piston runscripts --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend2.local.commure.com:8000/api/v1/r4 --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend3.local.commure.com:8000/api/v1/r4 --context local-r4 -- $@"
+alias piston_runscripts_debug="RUST_LOG=fhir_piston=debug RUST_BACKTRACE=1 piston runscripts --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend2.local.commure.com:8000/api/v1/r4 --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend3.local.commure.com:8000/api/v1/r4 --context local-r4 -- $@"
+alias piston_runscripts_db-check="RUST_LOG=fhir_piston=error RUST_BACKTRACE=1 tools/testscripts-db-check.sh --psql --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend2.local.commure.com:8000/api/v1/r4 --destination https://bend.local.commure.com:8000/api/v1/r4 --destination https://bend3.local.commure.com:8000/api/v1/r4 --context local-r4 -- $@"
+
+# piston mapping
+alias piston_mapping="RUST_LOG=fmlpp=debug ${tools}/hl7_tools/mapping.sh $@"
+alias piston_mapping_interpreter="RUST_LOG=fmlpp::interpreter,fmlpp=debug ${tools}/hl7_tools/mapping.sh $@"
+
+# localbend
+alias localbend_ci="FEATURE_handle_hl7v2_queue=false bend/bend-ci-features localbend start"
+alias localbend_postgres="FEATURE_use_postgresql=true FEATURE_handle_hl7v2_queue=false bend/bend-ci-features bin/bend-dev start --dbport 5432 -h 0.0.0.0 > ~/workspace/var/log/bend/bend.log 2>&1 &"
