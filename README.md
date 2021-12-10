@@ -5,7 +5,7 @@ Based upon the following [setup](https://mjones44.medium.com/storing-dotfiles-in
 ## Getting Started
 Start using the dotfiles by running the following:
 ```bash
-curl https://raw.githubusercontent.com/dmorand17/dotfiles-bare/master/scripts/config-init | bash
+curl https://raw.githubusercontent.com/dmorand17/dotfiles-bare/master/.cfg-tools/config-init | bash
 ```
 
 ## Additional setup
