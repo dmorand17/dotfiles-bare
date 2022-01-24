@@ -76,6 +76,9 @@ brew install --cask spotify
 brew install --cask burp-suite
 brew install --cask meld
 
+# Fix mouse / trackpad scrolling
+brew install --cask unnaturalscrollwheels
+
 # Docker
 brew install docker
 brew install docker-compose
