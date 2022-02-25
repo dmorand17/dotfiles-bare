@@ -10,3 +10,6 @@ curl https://raw.githubusercontent.com/dmorand17/dotfiles-bare/master/.cfg-tools
 
 ## Additional setup
 see documentation [here](.cfg-tools/README.md)
+
+## Testing
+see documentation [here](.cfg-test/README.md)
