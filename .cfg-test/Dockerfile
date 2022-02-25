@@ -33,12 +33,12 @@ ENV HOME /home/dotuser
 
 WORKDIR $HOME
 
-# If BRANCH not passed, default to 'master'
-ARG BRANCH=master
+RUN curl https://raw.githubusercontent.com/dmorand17/dotfiles-bare/master/.cfg-tools/config-init | bash
+
+# If BRANCH not passed, default to 'main'
+#ARG BRANCH=main
 
 # Using SHA gets past the issue of the git clone being cached and not pulling in most recent commits
-ARG SHA=LATEST
-RUN SHA=${SHA} \
-    git clone -b ${BRANCH} https://github.com/dmorand17/dotfiles-bare.git
-
-WORKDIR $HOME/bootstrappah
+#ARG SHA=LATEST
+#RUN SHA=${SHA} \
+#    git clone -b ${BRANCH} https://github.com/dmorand17/dotfiles-bare.git
