@@ -65,6 +65,7 @@ brew install xmlsec1
 brew install node
 brew install tree
 brew install csvkit
+brew install yamllint
 
 # dbeaver
 brew install --cask dbeaver-community
