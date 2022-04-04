@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+rebaseWithMaster() {
+    #1) Checks out the master branch.
+    #2) Pulls any remote changes.
+    #3) Swaps back to your original branch.
+    #4) Rebases with master.
+
+    exe git checkout master && git pull && git checkout - && git rebase master
+}
+
+battail() {
+    tail -f "$@" | bat --paging=never -l log --style=plain
+}
+
+cleanOrig() {
+    # Useful for cleaning up .orig* files post handling merge conflicts
+    #git status -su | grep --null "\.orig$" | cut -c4- | xargs -0 rm -r
+    find . -name '*.orig' -delete
+}
+
+# Create a new directory and enter it
+function mkd() {
+	mkdir -p "$@" && cd "$_";
+}
