@@ -43,3 +43,5 @@ alias config='git --git-dir=${HOME}/.cfg --work-tree=${HOME}'
 alias tailf="tail -f $@"
 alias battail="tail -f $@ | bat --paging=never -l log --style=plain"
 alias batdiff="git diff --name-only --diff-filter=ad | xargs bat --diff"
+
+alias gdiff="git diff -U5 -w --no-index $@"
