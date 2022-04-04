@@ -4,12 +4,13 @@ alias brew_update='brew update && brew outdated && brew upgrade && brew outdated
 
 # Work specific aliases
 alias ssh="/Users/douglasm/scripts/shell/ssh-iTerm2"
-
 alias mermaid="./node_modules/.bin/mmdc $@"
 
 alias tailf="tail -f $@"
+alias battail="tail -f $@ | bat --paging=never -l log --style=plain"
+alias batdiff="git diff --name-only --diff-filter=ad | xargs bat --diff"
 alias split="gsplit"
-alias k=kubectl
+alias kc=kubectl
 
 # Azure aliases
 alias azlogin_commure="az login -t fb46afcb-63c3-496e-9e9d-53f3d584ebeb"

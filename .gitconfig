@@ -67,6 +67,9 @@
     # Delete all local branches
     dellocalbranch = !"git branch | grep -v master | xargs git branch -D"
 
+    # Set project user.name and user.email to Doug
+    userdoug = !"git config user.name \"Doug Morand\" && git config user.email \"dmorand@gmail.com\""
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
@@ -186,3 +189,5 @@
 [user]
 	name = Doug Morand
 	email = doug@commure.com
+[init]
+	defaultBranch = main
