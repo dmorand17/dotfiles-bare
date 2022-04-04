@@ -41,7 +41,6 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 alias config='git --git-dir=${HOME}/.cfg --work-tree=${HOME}'
 
 alias tailf="tail -f $@"
-alias battail="tail -f $@ | bat --paging=never -l log --style=plain"
 alias batdiff="git diff --name-only --diff-filter=ad | xargs bat --diff"
 
 alias gdiff="git diff --unified5 --ignore-all-space --no-index $@"
