@@ -176,5 +176,8 @@ nnoremap <C-H> <C-W><C-H>¬
 nnoremap d "_d
 vnoremap d "_d
 
+" Delete all text in file and send to black hole register
+noremap <leader>da :%d_<CR>
+
 " fmlpp syntax highlighting
 au BufRead,BufNewFile *.fmlpp set filetype=fmlpp
