@@ -1,3 +1,5 @@
+
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -172,9 +174,12 @@ nnoremap <C-K> <C-W><C-K>¬
 nnoremap <C-L> <C-W><C-L>¬
 nnoremap <C-H> <C-W><C-H>¬
 
-" Map 'x' to blackhole register
+" Map 'x' to black hole register
 nnoremap d "_d
 vnoremap d "_d
+
+" Delete all text in file and send to black hole register
+noremap <leader>da :%d_<CR>
 
 " fmlpp syntax highlighting
 au BufRead,BufNewFile *.fmlpp set filetype=fmlpp

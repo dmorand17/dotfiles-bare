@@ -7,7 +7,6 @@ alias ssh="/Users/douglasm/scripts/shell/ssh-iTerm2"
 alias mermaid="./node_modules/.bin/mmdc $@"
 
 alias tailf="tail -f $@"
-alias battail="tail -f $@ | bat --paging=never -l log --style=plain"
 alias batdiff="git diff --name-only --diff-filter=ad | xargs bat --diff"
 alias split="gsplit"
 alias kc=kubectl
@@ -31,4 +30,4 @@ alias piston_mapping_interpreter="RUST_LOG=fmlpp::interpreter,fmlpp=debug ${tool
 
 # localbend
 alias localbend_ci="FEATURE_handle_hl7v2_queue=false bend/bend-ci-features localbend start"
-alias localbend_postgres="FEATURE_use_postgresql=true FEATURE_handle_hl7v2_queue=false bend/bend-ci-features bin/bend-dev start --dbport 5432 -h 0.0.0.0 > ~/workspace/var/log/bend/bend.log 2>&1 &"
+alias localbend_postgres="FEATURE_use_postgresql=true bend/bend-ci-features bin/bend-dev start --dbport 5432 -h 0.0.0.0 > ~/workspace/var/log/bend/bend.log 2>&1 &"

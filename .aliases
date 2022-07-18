@@ -39,3 +39,5 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 
 # dotfiles config alias
 alias config='git --git-dir=/Users/douglasm/.cfg --work-tree=/Users/douglasm'
+
+alias gdiff="git diff -U5 -w --no-index $@"

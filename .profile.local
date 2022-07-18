@@ -23,3 +23,5 @@ ulimit -S -n 2048
 # tools/bootstrap autopatched
 export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
 
+
+SERV_CONFIGS="/Users/douglasm/workspace/commure/bend/serv-configs"
